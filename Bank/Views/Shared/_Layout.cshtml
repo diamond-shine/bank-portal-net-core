@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/css/StyleSheet.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="bg-info p-4 row">
+        <div class="col">
+            <a asp-action="Index" asp-controller="Home" class="justify-content-xl-center"><h3>Bank</h3></a>
+        </div>
+        <div class="col-2">
+            <a asp-action="Login" asp-controller="Customer" class="btn btn-warning btn-success">Log in</a>
+        </div>
+    </div>
+    <div class="text-center container">        
+        @RenderBody()
+    </div>
+</body>
+</html>

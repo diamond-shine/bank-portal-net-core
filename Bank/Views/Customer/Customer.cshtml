@@ -1,0 +1,60 @@
+﻿@model Bankcustomer
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<h2>Welcome @Model.Name</h2>
+@if (TempData["success"] != null)
+{
+    <div class="alert-info text-lg-center p-2">
+        <p>@TempData["success"]</p>
+    </div>
+}
+else if(TempData["error"] != null)
+{
+    <div class="alert-warning text-lg-center p-2">
+        <p>@TempData["error"]</p>
+    </div>
+}
+<table class="table table-active table-info">
+    <tr>
+        <th>Account Number</th>
+        <th>Manager Id</th>
+        <th>Balance</th>
+        <th>Type of Account</th>
+        <th>Options</th>
+    </tr>
+    @foreach (Bankaccount account in Model.Bankaccount.OrderBy(a => a.Accountnumber))
+    {
+        <tr>
+            <td>@account.Accountnumber</td>
+            <td>@account.Managerid</td>
+            <td>@account.Balance.ToString("C")</td>
+            <td>@account.AccounttypeNavigation.Typename</td>
+            <td>
+                <a asp-action="AccountDetails" asp-controller="Account" asp-route-id="@account.Accountnumber" class="btn btn-secondary btn-warning">
+                    Details
+                </a>
+                <a asp-action="Transactions" asp-controller="Transaction" asp-route-id="@Model.Customerid" asp-route-aid="@account.Accountnumber" class="btn btn-secondary btn-info">
+                    Transactions
+                </a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="2">Total balance</td>
+        <td>@Model.Bankaccount.Sum(a => a.Balance).ToString("c")</td>
+        <td colspan="2">
+            @if (Model.Banktransaction.Count != 0)
+            {
+                <a asp-action="AllTransactions" asp-controller="Transaction" asp-route-id="@Model.Customerid" class="btn btn-secondary btn-info">
+                    All Transactions
+                </a>
+            }
+        </td>
+    </tr>
+</table>
+<a asp-action="AddAccount" asp-controller="Account" asp-route-id="@Model.Customerid" class="btn btn-primary btn-warning">
+    Add Account
+</a>
+

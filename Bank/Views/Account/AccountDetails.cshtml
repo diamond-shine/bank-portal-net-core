@@ -1,0 +1,22 @@
+﻿@model Bankaccount
+@{
+    ViewData["Title"] = "AccountDetails";
+}
+@Html.Partial("BackButtonPartial")
+<h2>Account Details</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>Account Number</th>
+        <th>Customer Id</th>
+        <th>Type</th>
+        <th>Balance</th>
+    </tr>
+    <tr>
+        <th>@Model.Accountnumber</th>
+        <th>@Model.Customerid</th>
+        <th>@Model.AccounttypeNavigation.Typename</th>
+        <th>@Model.Balance.ToString("C")</th>
+    </tr>
+</table>
+

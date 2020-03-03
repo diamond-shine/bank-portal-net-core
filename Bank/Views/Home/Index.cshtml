@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="text-center p-3">Welcome</h2>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-danger mt-1 text-danger">@TempData["message"]</div>
+}
+
+<div class="text-center">
+    <form asp-action="CustomerInfo" asp-controller="Customer" method="post">
+        <label for="id">Customer id: </label>
+        <input type="text" name="id"/>
+        <button class="btn btn-primary btn-info" type="submit">Submit</button>
+        <button class="btn btn-secondary btn-warning" type="reset">Reset</button>
+    </form>
+</div>
+<a asp-action="Customers" asp-controller="Customer" class="btn btn-primary btn-danger">Customers</a>
+
+

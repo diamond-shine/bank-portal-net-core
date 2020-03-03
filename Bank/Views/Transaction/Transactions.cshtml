@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Banktransaction>
+@{
+    ViewData["Title"] = "Transactions";
+}
+@Html.Partial("BackButtonPartial")
+<h2>Transactions</h2>
+
+@if (Model.Count() == 0)
+{
+    <h1>No transactions available</h1>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Customer ID</th>
+            <th>Account ID</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        @foreach (Banktransaction bt in Model)
+        {
+            <tr>
+                <td>@bt.Transactionid</td>
+                <td>@bt.Customerid</td>
+                <td>@bt.Accountnumber</td>
+                <td>@("$" + bt.Amount.ToString("#,##0.00"))</td>
+                <td>@(bt.TransactionDate.ToShortDateString() + " " + bt.TransactionDate.ToShortTimeString())</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3">Total</td>
+            <td>@((Model.Sum(t => t.Amount)).ToString("C"))</td>
+            <td>@ViewBag.Date</td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,74 @@
+﻿@model Bankcustomer
+@{
+    ViewData["Title"] = "Customer " + Model.Name;
+}
+@Html.Partial("BackButtonPartial")
+<h2>@Model.Name</h2>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert-info text-lg-center p-2">
+        <p>@TempData["success"]</p>
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert-warning text-lg-center p-2">
+        <p>@TempData["error"]</p>
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Sin Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>@Model.Customerid</th>
+            <th>@Model.Name</th>
+            <th>@Model.Sinnumber</th>
+        </tr>
+    </tbody>
+</table>
+
+@if (Model.Bankaccount.Count == 0)
+{
+    <p>No Accounts</p>
+}
+else
+{
+    <h2>Add Transaction</h2>
+    <form asp-action="AddTransaction" asp-controller="Customer" method="post">
+        <div class="row">
+            <div class="col form-group">
+                <label for="customerId">Name: </label><br />
+                <h2>@Model.Name</h2>
+                <input name="customerId" type="hidden" value="@Model.Customerid" />
+            </div>
+            <div class="col form-group">
+                <label for="accountNumber">Accounts: </label>
+                <select name="accountNumber" class="form-control">
+                    <option value=""></option>
+                    @foreach (Bankaccount account in Model.Bankaccount)
+                    {
+                        <option value="@account.Accountnumber">
+                            @("Account Number: " + account.Accountnumber + "\t|\t" + account.AccounttypeNavigation.Typename + "\t|\t Balance: " + account.Balance.ToString("c"))
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-3 form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" class="form-control" placeholder="0.00" required name="amount" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" />
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary btn-info">Enter</button>
+            <button type="reset" class="btn btn-secondary btn-warning">Clear</button>
+        </div>
+    </form>
+}
